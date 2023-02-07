@@ -1,0 +1,2 @@
+ctrl d = select one by one
+ctrl shift l = select all match
