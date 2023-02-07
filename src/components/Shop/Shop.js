@@ -13,11 +13,28 @@ currentPage (page)
 */
 
 const Shop = () => {
-    const { products, count } = useLoaderData(); // for pagination
-    const [cart, setCart] = useState([]);
+    // const { products, count } = useLoaderData(); // for pagination
 
+    // pagination anujayi data load krbo tai
+    const [products, setProducts] = useState([]);
+    
+    const [cart, setCart] = useState([]);
+    
+    const [count, setCount] = useState(0);
     const [page, setPage] = useState(0); // changing for pagination
     const [size, setSize] = useState(10); // changing for pagination
+
+    useEffect(() => {
+        const url = `http://localhost:5000/products?page=${page}&size=${size}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setCount(data.count);
+                setProducts(data.products);
+            })
+    }, [page, size])
+
+
 
     const pages = Math.ceil(count / size); // fraction hole error dibe
 
