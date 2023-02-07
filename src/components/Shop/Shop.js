@@ -77,7 +77,7 @@ const Shop = () => {
                 </Cart>
             </div>
             <div className="pagination">
-                <p style={{ fontSize: '20px' }}>Currently selected page: {page}</p>
+                <p style={{ fontSize: '20px' }}>Currently selected page: {page} and size: {size}</p>
                 {
                     [...Array(pages).keys()].map(number =>
                         <button
@@ -89,6 +89,12 @@ const Shop = () => {
                         </button>
                     )
                 }
+                <select onChange={event => setSize(event.target.value)}>
+                    <option value="5">5</option>
+                    <option value="10" selected >10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
             </div>
         </div>
     );
