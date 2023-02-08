@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { addToDb, deleteShoppingCart, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
@@ -102,7 +102,8 @@ const Shop = () => {
                             onClick={() => setPage(number)}
                             className={page === number && 'selected'}
                         >
-                            {number}
+                            {/* pagination 1 theke suru korte chaile */}
+                            {number + 1}
                         </button>
                     )
                 }
