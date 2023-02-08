@@ -17,10 +17,10 @@ const Shop = () => {
 
     // pagination anujayi data load krbo tai
     const [products, setProducts] = useState([]);
-    
-    const [cart, setCart] = useState([]);
-    
+
     const [count, setCount] = useState(0);
+    const [cart, setCart] = useState([]);
+
     const [page, setPage] = useState(0); // changing for pagination
     const [size, setSize] = useState(10); // changing for pagination
 
@@ -46,16 +46,46 @@ const Shop = () => {
     useEffect(() => {
         const storedCart = getStoredCart();
         const savedCart = [];
-        for (const id in storedCart) {
-            const addedProduct = products.find(product => product._id === id);
-            if (addedProduct) {
-                const quantity = storedCart[id];
-                addedProduct.quantity = quantity;
-                savedCart.push(addedProduct);
-            }
-        }
-        setCart(savedCart);
+        // console.log('storedCart', storedCart); // jei jei id gulo cart a save ase segulo
+
+        //akhon ai id gulo server a pathabo & server theke ai id anujayi product gulo load krbo
+
+
+        //for pagination count
+        const ids = Object.keys(storedCart);
+        // console.log(ids); // aitai uporer console.log(storedCart) ta
+        // key mane protita object er 1ta kore number dici
+
+        fetch('http://localhost:5000/productsByIds', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(ids)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log('by ids', data)
+
+                for (const id in storedCart) {
+                    const addedProduct = data.find(product => product._id === id);
+                    if (addedProduct) {
+                        const quantity = storedCart[id];
+                        addedProduct.quantity = quantity;
+                        savedCart.push(addedProduct);
+                    }
+                }
+                setCart(savedCart);
+
+            })
+
     }, [products])
+
+
+
+
+
+
 
     const handleAddToCart = (selectedProduct) => {
         console.log(selectedProduct);
